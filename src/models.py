@@ -25,7 +25,9 @@ class User(db.Model):
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    favorite = db.relationship('Favorite', back_populates="characters")
+    gender =db.Column(db.String(120), unique=False, nullable=True)
+    eye_color =db.Column(db.String(120), unique=False, nullable=False)
+    birth_year = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
         return 'chatacter %r' %self.name
@@ -34,13 +36,17 @@ class Character(db.Model):
         return{
             "id": self.id,
             "name": self.name,
-            "favorite": self.favorite
+            "gender": self.gender,
+            "eye_color": self.eye_color,
+            "birth_year": self.birth_year
         }
 
 class Planet(db.Model):
     id = db.Column(db.Integer ,primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    favorite = db.relationship('Favorite', back_populates="planets")
+    terrain = db.Column(db.String(120), unique=False, nullable=False)
+    population =db.Column(db.String(120), unique=False, nullable=False)
+    diameter = db.Column(db.String(120), unique=False, nullable=False)
 
     def __repr__(self):
         return 'planet %r' %self.name
@@ -49,17 +55,18 @@ class Planet(db.Model):
         return{
             "id": self.id,
             "name": self.name,
-            "favorite": self.favorite
+            "terrain": self.terrain,
+            "population": self.population,
+            "diameter": self.diameter
+            
         }
 
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    character_id = db.Column(db.ForeignKey('character.id'))  
-    characters = db.relationship('Favorite', back_populates="character")
-    planet_id = db.Column(db.ForeignKey('planet.id'))  
-    planets = db.relationship('Favorite', back_populates="planet")
     user_id = db.Column(db.ForeignKey('user.id'))  
     users = db.relationship('User', back_populates="favorite")
+    fav = db.Column(db.String(120), unique=False, nullable=False)
+    fav_id = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
         return 'favorite %r' %self.id
@@ -67,8 +74,9 @@ class Favorite(db.Model):
     def serialize(self):
         return{
             "id": self.id,
-            "character": self.character,
-            "planet": self.planet,
-            "user": self.user,         
+            "user_id":self.user_id,
+            "user": self.user,      
+            "fav" : self.fav,
+            "fav_id": self.fav_id   
         }
 
