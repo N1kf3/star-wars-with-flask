@@ -25,7 +25,7 @@ class User(db.Model):
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    gender =db.Column(db.String(120), unique=False, nullable=True)
+    gender =db.Column(db.String(120), unique=False, nullable=False)
     eye_color =db.Column(db.String(120), unique=False, nullable=False)
     birth_year = db.Column(db.String(120), unique=False, nullable=False)
 
